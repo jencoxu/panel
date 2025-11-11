@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成二维码</title>
+    <script src="https://libs.xiaoz.top/vue/2.6.14/vue.min.js"></script>
+    <script src="qrcode.min.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+        }
+        #app {
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background: white;
+            border-radius: 10px;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px 15px;
+            border: 2px solid #007BFF;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #qrcode {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <input type="text" v-model="text" placeholder="输入内容">
+            <button @click="generateQRCode">生成二维码</button>
+        </div>
+        <div>
+            <div id="qrcode"></div>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                text: ''
+            },
+            methods: {
+                generateQRCode() {
+                    document.getElementById('qrcode').innerHTML = ""; // 清空之前的二维码
+                    if (this.text.trim() !== '') {
+                        new QRCode(document.getElementById("qrcode"), {
+                            text: this.text,
+                            width: 128,
+                            height: 128,
+                            colorDark : "#000000",
+                            colorLight : "#ffffff",
+                            correctLevel : QRCode.CorrectLevel.H
+                        });
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

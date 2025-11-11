@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>导航</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="css/jquery.min.js"></script>
+<script src="css/font.js"></script>
+<script src="css/particles.min.js"></script>
+</head>
+<body>
+    <div id="particles-js" style="position:absolute; top: 0; z-index: -1; width: 100%;height: 100%;"><canvas class="particles-js-canvas-el" width="1920" height="1080" style="width: 100%; height: 100%;"></canvas></div>
+    <script src="css/particles.js"></script>
+	<div id="wrap">
+		<div id="top">
+		  <div id="logo">
+			<img class="logo" src="img/logo.png">
+			<h1>导航</h1>
+			<div id="kg-btn" class=""><input class='tgl tgl-flip' id='qieh' type='checkbox' /><label class='tgl-btn' data-tg-off='内 网' data-tg-on='外 网' for='qieh'></label></div>
+		  </div>
+	    </div>
+		<div id="main">
+<!-- 内网访问 -->
+<div id="app" class="app animated fadeInLeft">
+ <ul>
+
+<style>
+.centered-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.centered-link img {
+  display: block;
+  margin-bottom: 1px;
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.centered-link strong {
+  font-size: 16px;
+  font-family: 'Inter', 'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+</style>
+
+<li>
+  <a href="http://192.168.2.4:9090/ui/zashboard/#/proxies/" target="_blank" class="centered-link">
+    <img class="shake" src="img/zashboard.png" />
+    <strong>zashboard</strong>
+  </a>
+</li>
+
+<li>
+  <a href="https://192.168.2.3:8006/#v1:0:=node%2FN100:4:5::::::/" target="_blank" class="centered-link">
+    <img class="shake" src="img/pve.png" />
+    <strong>PVE</strong>
+  </a>
+</li>
+
+<li>
+  <a href="http://192.168.2.4/cgi-bin/luci/admin/services/openclash/" target="_blank" class="centered-link">
+    <img class="shake" src="img/openwrt.png" />
+    <strong>OpenWrt</strong>
+  </a>
+</li>
+
+<li>
+  <a href="https://192.168.2.6:5001//" target="_blank" class="centered-link">
+    <img class="shake" src="img/nas.png" />
+    <strong>NAS</strong>
+  </a>
+</li>
+
+<li>
+  <a href="http://192.168.2.5:9000/#!/2/docker/containers/" target="_blank" class="centered-link">
+    <img class="shake" src="img/portainer.png" />
+    <strong>Portainer</strong>
+  </a>
+</li>
+
+<li>
+  <a href="http://192.168.2.6:8085/#/" target="_blank" class="centered-link">
+    <img class="shake" src="img/qb.png" />
+    <strong>qb</strong>
+  </a>
+</li>
+
+<li>
+  <a href="http://192.168.2.5:8096/web/index.html#/home.html/" target="_blank" class="centered-link">
+    <img class="shake" src="img/jellyfin.png" />
+    <strong>Jellyfin</strong>
+  </a>
+</li>
+
+<li>
+  <a href="http://192.168.2.5:5230/" target="_blank" class="centered-link">
+    <img class="shake" src="img/memos.png" />
+    <strong>Memos</strong>
+  </a>
+</li>
+
+<li>
+  <a href="https://192.168.2.6:5001/?launchApp=SYNO.SDS.App.FileStation3.Instance&launchParam=openfile%3D%252FDownload%252FMovie%252F&SynoToken=Es.9rAJyIf2as/" target="_blank" class="centered-link">
+    <img class="shake" src="img/filestation.png" />
+    <strong>FileStation</strong>
+  </a>
+</li>
+
+<li>
+  <a href="https://komari.121114.xyz/" target="_blank" class="centered-link">
+    <img class="shake" src="img/tz.png" />
+    <strong>探针</strong>
+  </a>
+</li>
+
+<li>
+  <a href="http://192.168.2.5:3300/jencoxu/nikki/src/branch/main/openclash.yaml/" target="_blank" class="centered-link">
+    <img class="shake" src="img/gitea.png" />
+    <strong>Gitea</strong>
+  </a>
+</li>
+
+<li>
+  <a href="tool/cesu/index2.html" target="_blank" class="centered-link">
+    <img class="shake" src="img/cesu.png" />
+    <strong>测速</strong>
+  </a>
+</li>
+
+
+
+
+  
+ </ul>
+</div>
+<!-- 公网访问 -->
+<div id="app1" class="app animated fadeInRight">
+ <ul>
+  
+  
+  
+ </ul>
+</div>
+			<div style="clear: both;"></div>
+		</div>
+	</div>
+	<div id="footer">
+		<div class="footer-contents">
+
+今天是：<script language=JavaScript>
+	    today=new Date();
+		function initArray(){
+		    this.length=initArray.arguments.length
+			for(var i=0;i<this.length;i++)
+			this[i+1]=initArray.arguments[i]
+		}
+		var d=new initArray("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+		document.write("<font color=#ffffff> ",today.getFullYear(),"年",today.getMonth()+1,"月",today.getDate(),"日 ",d[today.getDay()+1],"</font>" ); 
+        </script>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
