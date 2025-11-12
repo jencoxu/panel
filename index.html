@@ -1,174 +1,423 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="renderer" content="webkit">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>导航</title>
-<link rel="stylesheet" href="css/style.css">
-<script src="css/jquery.min.js"></script>
-<script src="css/font.js"></script>
-<script src="css/particles.min.js"></script>
-</head>
-<body>
-    <div id="particles-js" style="position:absolute; top: 0; z-index: -1; width: 100%;height: 100%;"><canvas class="particles-js-canvas-el" width="1920" height="1080" style="width: 100%; height: 100%;"></canvas></div>
-    <script src="css/particles.js"></script>
-	<div id="wrap">
-		<div id="top">
-		  <div id="logo">
-			<img class="logo" src="img/logo.png">
-			<h1>导航</h1>
-			<div id="kg-btn" class=""><input class='tgl tgl-flip' id='qieh' type='checkbox' /><label class='tgl-btn' data-tg-off='内 网' data-tg-on='外 网' for='qieh'></label></div>
-		  </div>
-	    </div>
-		<div id="main">
-<!-- 内网访问 -->
-<div id="app" class="app animated fadeInLeft">
- <ul>
-
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>个人导航</title>
 <style>
-.centered-link {
+:root {
+  --primary-bg: rgba(255, 255, 255, 0.25);
+  --secondary-bg: rgba(255, 255, 255, 0.35);
+  --hover-bg: rgba(255, 255, 255, 0.45);
+  --border-color: rgba(255, 255, 255, 0.3);
+  --text-color: #2a2a2a;
+  --placeholder-color: rgba(80, 80, 80, 0.8);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* 关键修改：设置 html 背景色 */
+html {
+  background-color: #8ba888;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', 'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+  background: url(img/bg.jpg) no-repeat center center fixed;
+  background-size: cover;
+  background-color: #8ba888;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* 搜索栏样式 */
+.search-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 150px 0 80px 0;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  background: var(--primary-bg);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: var(--transition);
+}
+
+.search-box:focus-within {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.search-select {
+  position: relative;
+  min-width: 80px;
+  height: 48px;
+  background: var(--secondary-bg);
+  border: none;
+  outline: none;
+  padding: 0 15px;
+  font-size: 14px;
+  color: var(--text-color);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  border-right: 1px solid var(--border-color);
+  transition: var(--transition);
+  border-radius: 24px 0 0 24px;
+  font-weight: 500;
+}
+
+.search-select:hover {
+  background-color: var(--hover-bg);
+}
+
+.search-select option {
+  color: #333;
+  font-size: 14px;
+  background: white;
+  padding: 8px;
+}
+
+.search-input {
+  flex: 1;
+  height: 48px;
+  border: none;
+  outline: none;
+  padding: 0 20px;
+  font-size: 16px;
+  color: var(--text-color);
+  background: transparent;
+  min-width: 0;
+}
+
+.search-input::placeholder {
+  color: var(--placeholder-color);
+}
+
+.search-button {
+  min-width: 50px;
+  height: 48px;
+  border: none;
+  background: var(--secondary-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  transition: var(--transition);
+  border-radius: 0 24px 24px 0;
+}
+
+.search-button:hover {
+  background: var(--hover-bg);
+  transform: scale(1.05);
+}
+
+.search-button:active {
+  transform: scale(0.95);
+}
+
+.search-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--text-color);
+}
+
+/* 网格布局 - 3行6列 */
+#wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.app {
+  width: 100%;
+}
+
+.app ul {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 30px;
+  row-gap: 35px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 1200px) {
+  .app ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .app ul {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    row-gap: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    row-gap: 20px;
+  }
+}
+
+.app li {
+  position: relative;
+}
+
+/* 链接卡片样式 - 横向布局 */
+.centered-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  text-decoration: none;
+  padding: 18px;
+  background: var(--primary-bg);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: var(--transition);
+  min-height: 95px;
+  gap: 15px;
+}
+
+.centered-link:hover {
+  background: var(--secondary-bg);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
 }
 
 .centered-link img {
   display: block;
-  margin-bottom: 1px;
-  width: 100px;
-  height: 100px;
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
+  transition: var(--transition);
+}
+
+.centered-link:hover img.shake {
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px) rotate(-3deg); }
+  75% { transform: translateX(3px) rotate(3deg); }
 }
 
 .centered-link strong {
-  font-size: 16px;
-  font-family: 'Inter', 'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  flex: 1;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.3px;
+  color: var(--text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+/* 动画 */
+.animated {
+  animation-duration: 0.6s;
+  animation-fill-mode: both;
+}
+
+.fadeInLeft {
+  animation-name: fadeInLeft;
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 响应式优化 */
+@media (max-width: 768px) {
+  .search-container {
+    margin: 60px 0 50px 0;
+  }
+  
+  .centered-link {
+    padding: 15px;
+    min-height: 80px;
+    gap: 12px;
+  }
+  
+  .centered-link img {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .centered-link strong {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-container {
+    margin: 40px 0 40px 0;
+  }
+  
+  .centered-link {
+    padding: 12px;
+    min-height: 70px;
+    gap: 10px;
+  }
+  
+  .centered-link img {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .centered-link strong {
+    font-size: 13px;
+  }
 }
 </style>
+</head>
+<body>
+  <div id="wrap">
+    <!-- 搜索栏 -->
+    <div class="search-container">
+      <div class="search-box">
+        <select class="search-select" id="search-engine" aria-label="选择搜索引擎">
+          <option value="https://www.google.com/search?q=">Google</option>
+          <option value="https://www.baidu.com/s?wd=">Baidu</option>
+          <option value="https://www.bing.com/search?q=">Bing</option>
+          <option value="https://translate.google.com/?sl=auto&tl=zh-CN&text=" class="engine-translate">Google翻译</option>
+          <option value="https://fanyi.baidu.com/#auto/zh/" class="engine-translate">百度翻译</option>
+        </select>
+        <input 
+          type="text" 
+          class="search-input" 
+          id="search-query" 
+          placeholder="请输入搜索内容"
+          autocomplete="off"
+          aria-label="搜索内容"
+        >
+        <button class="search-button" id="search-button" aria-label="搜索">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
 
-<li>
-  <a href="http://192.168.2.4:9090/ui/zashboard/#/proxies/" target="_blank" class="centered-link">
-    <img class="shake" src="img/zashboard.png" />
-    <strong>zashboard</strong>
-  </a>
-</li>
+    <!-- 导航链接 -->
+    <div id="app" class="app animated fadeInLeft">
+      <ul id="nav-links"></ul>
+    </div>
+  </div>
 
-<li>
-  <a href="https://192.168.2.3:8006/#v1:0:=node%2FN100:4:5::::::/" target="_blank" class="centered-link">
-    <img class="shake" src="img/pve.png" />
-    <strong>PVE</strong>
-  </a>
-</li>
+  <script>
+    // 导航链接数据
+    const navLinks = [
+      { url: "http://192.168.2.1/#/system-overview", img: "img/ik.png", name: "iKuai" },
+      { url: "http://192.168.2.4:9090/ui/zashboard/#/proxies/", img: "img/zashboard.png", name: "zashboard" },
+      { url: "https://192.168.2.3:8006/#v1:0:=node%2FN100:4:5:::::::/", img: "img/pve.png", name: "PVE" },
+      { url: "http://192.168.2.4/cgi-bin/luci/admin/services/openclash/", img: "img/openwrt.png", name: "OpenWrt" },
+      { url: "https://192.168.2.6:5001//", img: "img/nas.png", name: "NAS" },
+      { url: "http://192.168.2.5:9000/#!/2/docker/dashboard", img: "img/portainer.png", name: "Portainer" },
+      { url: "http://192.168.2.6:8085/#/", img: "img/qb.png", name: "qb" },
+      { url: "http://192.168.2.5:8096/web/index.html#/home.html/", img: "img/jellyfin.png", name: "Jellyfin" },
+      { url: "http://192.168.2.5:5230/", img: "img/memos.png", name: "Memos" },
+      { url: "https://192.168.2.6:5001/?launchApp=SYNO.SDS.App.FileStation3.Instance&launchParam=openfile%3D%252FDownload%252FMovie%252F&SynoToken=Es.9rAJyIf2as/", img: "img/filestation.png", name: "FileStation" },
+      { url: "https://komari.121114.xyz/", img: "img/tz.png", name: "Komari" },
+      { url: "http://192.168.2.5:3300/jencoxu/nikki/src/branch/main/openclash.yaml/", img: "img/gitea.png", name: "Gitea" },
+      { url: "https://www.youtube.com/", img: "img/youtube.svg", name: "YouTube" },
+      { url: "https://github.com/jencoxu?tab=stars/", img: "img/github.png", name: "GitHub" },
+      { url: "https://www.nodeseek.com/?sortBy=postTime/", img: "img/nodeseek.svg", name: "NodeSeek" },
+      { url: "https://chat.deepseek.com/", img: "img/deepseek.svg", name: "DeepSeek" },
+      { url: "https://chatgpt.com/", img: "img/chatgpt.svg", name: "ChatGPT" },
+      { url: "https://ip125.com/", img: "img/ip.svg", name: "IP" }
+    ];
 
-<li>
-  <a href="http://192.168.2.4/cgi-bin/luci/admin/services/openclash/" target="_blank" class="centered-link">
-    <img class="shake" src="img/openwrt.png" />
-    <strong>OpenWrt</strong>
-  </a>
-</li>
+    // 渲染导航链接
+    function renderNavLinks() {
+      const container = document.getElementById('nav-links');
+      const fragment = document.createDocumentFragment();
+      
+      navLinks.forEach(link => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <a href="${link.url}" target="_blank" class="centered-link" rel="noopener noreferrer">
+            <img class="shake" src="${link.img}" alt="${link.name}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23666%22%3E%3Cpath d=%22M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z%22/%3E%3C/svg%3E'">
+            <strong>${link.name}</strong>
+          </a>
+        `;
+        fragment.appendChild(li);
+      });
+      
+      container.appendChild(fragment);
+    }
 
-<li>
-  <a href="https://192.168.2.6:5001//" target="_blank" class="centered-link">
-    <img class="shake" src="img/nas.png" />
-    <strong>NAS</strong>
-  </a>
-</li>
+    // 搜索功能
+    function performSearch() {
+      const query = document.getElementById('search-query').value.trim();
+      const engine = document.getElementById('search-engine').value;
+      
+      if (query) {
+        window.open(engine + encodeURIComponent(query), '_blank', 'noopener,noreferrer');
+      }
+    }
 
-<li>
-  <a href="http://192.168.2.5:9000/#!/2/docker/containers/" target="_blank" class="centered-link">
-    <img class="shake" src="img/portainer.png" />
-    <strong>Portainer</strong>
-  </a>
-</li>
-
-<li>
-  <a href="http://192.168.2.6:8085/#/" target="_blank" class="centered-link">
-    <img class="shake" src="img/qb.png" />
-    <strong>qb</strong>
-  </a>
-</li>
-
-<li>
-  <a href="http://192.168.2.5:8096/web/index.html#/home.html/" target="_blank" class="centered-link">
-    <img class="shake" src="img/jellyfin.png" />
-    <strong>Jellyfin</strong>
-  </a>
-</li>
-
-<li>
-  <a href="http://192.168.2.5:5230/" target="_blank" class="centered-link">
-    <img class="shake" src="img/memos.png" />
-    <strong>Memos</strong>
-  </a>
-</li>
-
-<li>
-  <a href="https://192.168.2.6:5001/?launchApp=SYNO.SDS.App.FileStation3.Instance&launchParam=openfile%3D%252FDownload%252FMovie%252F&SynoToken=Es.9rAJyIf2as/" target="_blank" class="centered-link">
-    <img class="shake" src="img/filestation.png" />
-    <strong>FileStation</strong>
-  </a>
-</li>
-
-<li>
-  <a href="https://komari.121114.xyz/" target="_blank" class="centered-link">
-    <img class="shake" src="img/tz.png" />
-    <strong>探针</strong>
-  </a>
-</li>
-
-<li>
-  <a href="http://192.168.2.5:3300/jencoxu/nikki/src/branch/main/openclash.yaml/" target="_blank" class="centered-link">
-    <img class="shake" src="img/gitea.png" />
-    <strong>Gitea</strong>
-  </a>
-</li>
-
-<li>
-  <a href="tool/cesu/index2.html" target="_blank" class="centered-link">
-    <img class="shake" src="img/cesu.png" />
-    <strong>测速</strong>
-  </a>
-</li>
-
-
-
-
-  
- </ul>
-</div>
-<!-- 公网访问 -->
-<div id="app1" class="app animated fadeInRight">
- <ul>
-  
-  
-  
- </ul>
-</div>
-			<div style="clear: both;"></div>
-		</div>
-	</div>
-	<div id="footer">
-		<div class="footer-contents">
-
-今天是：<script language=JavaScript>
-	    today=new Date();
-		function initArray(){
-		    this.length=initArray.arguments.length
-			for(var i=0;i<this.length;i++)
-			this[i+1]=initArray.arguments[i]
-		}
-		var d=new initArray("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
-		document.write("<font color=#ffffff> ",today.getFullYear(),"年",today.getMonth()+1,"月",today.getDate(),"日 ",d[today.getDay()+1],"</font>" ); 
-        </script>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</div>
-			</div>
-		</div>
-	</div>
+    // 事件监听
+    document.addEventListener('DOMContentLoaded', function() {
+      // 渲染导航链接
+      renderNavLinks();
+      
+      // 搜索按钮点击
+      document.getElementById('search-button').addEventListener('click', performSearch);
+      
+      // 回车搜索
+      document.getElementById('search-query').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          performSearch();
+        }
+      });
+      
+      // 搜索框自动聚焦(桌面端)
+      if (window.innerWidth > 768) {
+        document.getElementById('search-query').focus();
+      }
+    });
+  </script>
 </body>
 </html>
